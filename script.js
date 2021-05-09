@@ -43,7 +43,7 @@ function createList() {
             listItem.innerHTML = `
         <span class="number">${idx + 1}</span>
         <div class="draggable" draggable="true">
-            <p class"person-name">${person}</p>
+            <p class="person-name">${person}</p>
             <i class="fas fa-grip-lines"></i>
         </div>
         `;
@@ -81,6 +81,7 @@ function dragDrop() {
     this.classList.remove('over');
 }
 
+// Swap list items that are drag and drop
 function swapItems(fromIndex, toIndex) {
     const itemOne = listItems[fromIndex].querySelector('.draggable');
     const itemTwo = listItems[toIndex].querySelector('.draggable');
@@ -89,6 +90,24 @@ function swapItems(fromIndex, toIndex) {
 
     listItems[fromIndex].appendChild(itemTwo);
     listItems[toIndex].appendChild(itemOne);
+}
+
+// Check the order of list items
+function checkOrder() {
+    listItems.forEach((listItem, idx) => {
+        const personName = listItem
+            .querySelector('.draggable')
+            .innerText.trim();
+
+        console.log(listItem);
+
+        if (personName !== richestPeople[idx]) {
+            listItem.classList.add('wrong');
+        } else {
+            listItem.classList.remove('wrong');
+            listItem.classList.add('right');
+        }
+    });
 }
 
 function addEventListeners() {
@@ -105,3 +124,5 @@ function addEventListeners() {
         item.addEventListener('dragleave', dragLeave);
     });
 }
+
+check.addEventListener('click', checkOrder);
